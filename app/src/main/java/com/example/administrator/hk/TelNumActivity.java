@@ -5,12 +5,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.administrator.hk.adapter.TelNumberAdapter;
 import com.example.administrator.hk.db.DBReader;
@@ -70,6 +72,13 @@ public class TelNumActivity extends BaseActivity {
                     //                                          int[] grantResults)
                     // to handle the case where the user grants the permission. See the documentation
                     // for ActivityCompat#requestPermissions for more details.
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        requestPermissions(new String[]{
+                                Manifest.permission.CALL_PHONE
+                        }, 1);
+                    } else {
+                        Toast.makeText(TelNumActivity.this, "请给我打电话权限-----------", Toast.LENGTH_SHORT).show();
+                    }
                     return;
                 }
                 startActivity(intent);
